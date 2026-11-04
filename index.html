@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vipul Thakor | Portfolio</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',sans-serif;background:#0b0f1a;color:#fff;overflow-x:hidden}
+section{padding:100px 8%}
+.progress-bar{position:fixed;top:0;left:0;width:0;height:4px;background:linear-gradient(90deg,#00ffc8,#00a2ff);box-shadow:0 0 10px #00ffc8;z-index:200}
+
+/* header */
+.header{position:fixed;top:0;left:0;width:100%;padding:20px 8%;display:flex;justify-content:space-between;align-items:center;z-index:100;transition:.4s}
+.header.scrolled{background:rgba(11,15,26,.92);box-shadow:0 4px 20px rgba(0,255,200,.2);padding:14px 8%}
+.logo{font-size:26px;font-weight:700;color:#fff;text-decoration:none}
+.logo span{color:#00ffc8}
+.navbar a{position:relative;margin-left:26px;font-size:16px;color:#fff;text-decoration:none;transition:.3s}
+.navbar a:hover,.navbar a.current{color:#00ffc8}
+.navbar a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:#00ffc8;transition:.3s}
+.navbar a:hover::after,.navbar a.current::after{width:100%}
+.menu-btn{display:none;flex-direction:column;gap:6px;padding:6px;background:none;border:none;cursor:pointer}
+.menu-btn span{width:28px;height:3px;background:#00ffc8;border-radius:3px;transition:.4s}
+.menu-btn.open span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.menu-btn.open span:nth-child(2){opacity:0}
+.menu-btn.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+
+/* common */
+.heading{text-align:center;font-size:42px;margin-bottom:50px}
+.heading span{color:#00ffc8}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(0,255,200,.3);border-radius:20px;box-shadow:0 0 30px rgba(0,255,200,.1)}
+.btn{display:inline-block;padding:14px 32px;background:#00ffc8;color:#0b0f1a;font-weight:700;font-size:16px;font-family:inherit;border:none;border-radius:40px;text-decoration:none;cursor:pointer;box-shadow:0 0 20px rgba(0,255,200,.5);transition:.3s}
+.btn:hover{transform:translateY(-5px);box-shadow:0 0 35px rgba(0,255,200,.9)}
+.btn-outline{background:transparent;color:#00ffc8;border:2px solid #00ffc8;box-shadow:none;margin-left:12px}
+.btn-outline:hover{background:#00ffc8;color:#0b0f1a}
+.reveal{opacity:0;transform:translateY(60px);transition:1s ease}
+.reveal.active{opacity:1;transform:translateY(0)}
+
+/* home */
+.home{min-height:100vh;display:flex;align-items:center;justify-content:space-between;gap:40px;padding-top:100px}
+.home-content{animation:fadeUp 1s ease}
+.home-content h3{font-size:28px;font-weight:600}
+.home-content h1{font-size:58px;line-height:1.2;color:#00ffc8}
+.home-content p{margin:20px 0 30px;max-width:500px;font-size:17px;line-height:1.6;color:#c5c9d6}
+.typing{color:#00ffc8}
+.typing::after{content:"|";margin-left:4px;animation:blink .7s infinite}
+.profile-pic{display:block;width:340px;height:340px;object-fit:cover;object-position:top;border-radius:50%;border:4px solid #00ffc8;box-shadow:0 0 40px rgba(0,255,200,.5);animation:float 3s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+/* about */
+.about-box{display:flex;align-items:center;justify-content:space-between;gap:50px;padding:40px}
+.about-text h3{font-size:28px;color:#00ffc8;margin-bottom:15px}
+.about-text p{font-size:17px;line-height:1.8;color:#c5c9d6;margin-bottom:15px}
+.about-stats{display:flex;gap:20px}
+.stat{text-align:center;padding:25px 30px;background:rgba(0,255,200,.08);border-radius:15px;transition:.3s}
+.stat:hover{transform:translateY(-10px);box-shadow:0 0 25px rgba(0,255,200,.5)}
+.stat h4{font-size:36px;color:#00ffc8}
+.stat p{font-size:15px;color:#c5c9d6}
+
+/* skills */
+.skills-box{max-width:800px;margin:0 auto;padding:40px}
+.skill{margin-bottom:28px}
+.skill:last-child{margin-bottom:0}
+.skill-info{display:flex;justify-content:space-between;margin-bottom:10px;font-size:17px;font-weight:600}
+.bar{height:12px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden}
+.bar-fill{width:0;height:100%;background:linear-gradient(90deg,#00ffc8,#00a2ff);border-radius:10px;box-shadow:0 0 15px rgba(0,255,200,.7);transition:width 1.5s ease}
+
+/* experience */
+.timeline{max-width:800px;margin:0 auto;padding-left:30px;border-left:3px solid #00ffc8}
+.job{position:relative;margin-bottom:35px;padding:28px;transition:.3s}
+.job:last-child{margin-bottom:0}
+.job:hover{box-shadow:0 0 30px rgba(0,255,200,.4);transform:translateX(8px)}
+.job::before{content:"";position:absolute;left:-40px;top:32px;width:16px;height:16px;background:#00ffc8;border-radius:50%;box-shadow:0 0 15px #00ffc8}
+.job h3{font-size:22px;color:#00ffc8}
+.job h4{margin:6px 0 12px;font-size:15px;font-weight:500;color:#00a2ff}
+.job p{margin-bottom:18px;line-height:1.7;color:#c5c9d6}
+.cert-btn{padding:10px 24px;font-size:15px}
+
+/* projects */
+.projects-box{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+.project-card{padding:35px 28px;text-align:center;transition:transform .2s ease,box-shadow .3s}
+.project-card:hover{box-shadow:0 0 35px rgba(0,255,200,.5)}
+.project-icon{font-size:60px;margin-bottom:15px}
+.project-card h3{font-size:24px;color:#00ffc8;margin-bottom:12px}
+.project-card p{font-size:16px;line-height:1.7;color:#c5c9d6;margin-bottom:18px}
+.tags{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.tags span{padding:5px 14px;font-size:13px;color:#00ffc8;background:rgba(0,255,200,.1);border-radius:20px}
+
+/* resume (paper) */
+.paper{max-width:850px;margin:0 auto;padding:45px;background:#fff;color:#111;border-radius:12px;box-shadow:0 0 40px rgba(0,255,200,.3)}
+.paper h2{font-size:34px;color:#0b0f1a}
+.paper .role{font-size:17px;color:#007a62;font-weight:600;margin:4px 0 8px}
+.paper .contact-line{font-size:14px;color:#444;margin-bottom:22px}
+.paper h3{font-size:16px;letter-spacing:1px;text-transform:uppercase;color:#0b0f1a;border-bottom:2px solid #00c9a0;padding-bottom:4px;margin:22px 0 10px}
+.paper p,.paper li{font-size:14.5px;line-height:1.65;color:#222}
+.paper ul{padding-left:20px}
+.paper .row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:600;font-size:15px;margin-top:10px}
+.paper .row span{font-weight:400;color:#555;font-size:13.5px}
+.resume-actions{text-align:center;margin-top:30px}
+
+/* contact */
+.contact-form{max-width:700px;margin:0 auto;padding:40px}
+.input-row{display:flex;gap:20px}
+.contact-form input,.contact-form textarea{width:100%;padding:15px 18px;margin-bottom:20px;font-size:16px;font-family:inherit;color:#fff;background:rgba(255,255,255,.08);border:2px solid transparent;border-radius:12px;outline:none;transition:.3s}
+.contact-form input:focus,.contact-form textarea:focus{border-color:#00ffc8;box-shadow:0 0 20px rgba(0,255,200,.4)}
+.contact-form textarea{resize:none}
+.form-msg{margin-top:18px;font-weight:600;color:#00ffc8}
+.mail-line{text-align:center;margin-top:25px;color:#c5c9d6}
+.mail-line a{color:#00ffc8}
+
+/* footer */
+.footer{display:flex;justify-content:space-between;align-items:center;padding:25px 8%;background:rgba(255,255,255,.04);border-top:1px solid rgba(0,255,200,.3);color:#c5c9d6}
+.top-btn{display:flex;justify-content:center;align-items:center;width:45px;height:45px;font-size:22px;color:#0b0f1a;background:#00ffc8;border-radius:50%;text-decoration:none;box-shadow:0 0 20px rgba(0,255,200,.5);transition:.3s}
+.top-btn:hover{transform:translateY(-5px)}
+
+/* certificate popup */
+.modal{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.88);z-index:300}
+.modal.show{display:flex}
+.modal img{max-width:90%;max-height:85vh;border:3px solid #00ffc8;border-radius:12px;box-shadow:0 0 40px rgba(0,255,200,.5)}
+.modal-close{position:absolute;top:20px;right:35px;font-size:44px;color:#00ffc8;cursor:pointer}
+
+
+.resume-box{max-width:850px;margin:0 auto;padding:10px}
+.resume-box iframe{display:block;width:100%;height:80vh;border:0;border-radius:12px;background:#fff}
+.resume-actions .btn{margin:0 6px 10px}
+.modal iframe{width:90%;height:80vh;border:3px solid #00ffc8;border-radius:12px;background:#fff}
+.modal-open{position:absolute;bottom:18px;color:#00ffc8;font-size:15px}
+@media(max-width:900px){.resume-box iframe{height:60vh}.modal iframe{height:75vh}}
+
+/* mobile */
+@media(max-width:900px){
+  section{padding:90px 6%}
+  .menu-btn{display:flex}
+  .navbar{position:absolute;top:100%;left:0;width:100%;display:flex;flex-direction:column;background:rgba(11,15,26,.97);max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .navbar.open{max-height:450px;border-bottom:1px solid rgba(0,255,200,.3)}
+  .navbar a{margin:0;padding:16px 8%;font-size:18px}
+  .navbar a::after{display:none}
+  .home{flex-direction:column-reverse;text-align:center;padding-top:120px}
+  .home-content h1{font-size:38px}
+  .profile-pic{width:240px;height:240px}
+  .btn-outline{margin-left:0;margin-top:12px}
+  .about-box{flex-direction:column;padding:25px}
+  .about-stats{flex-wrap:wrap;justify-content:center}
+  .input-row{flex-direction:column;gap:0}
+  .contact-form{padding:25px}
+  .job:hover{transform:none}
+  .paper{padding:25px}
+}
+
+/* print = sirf resume PDF banegi */
+@media print{
+  body>*:not(#resume){display:none!important}
+  body{background:#fff}
+  #resume{padding:0;min-height:0}
+  #resume .heading,.resume-actions{display:none}
+  .paper{box-shadow:none;max-width:100%;padding:0;border-radius:0}
+  .reveal{opacity:1;transform:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="header" id="header">
+  <a href="#home" class="logo">Vipul<span>.Dev</span></a>
+  <nav class="navbar" id="navbar">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#resume">Resume</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+
+<section class="home" id="home">
+  <div class="home-content">
+    <h3>Hello, It's Me</h3>
+    <h1>Thakor Vipulji</h1>
+    <h3>And I'm a <span class="typing"></span></h3>
+    <p>I create modern websites, useful applications and IT projects.</p>
+    <a href="#projects" class="btn">Explore My Projects</a>
+    <a href="files/resume.pdf" download="Vipul_Resume.pdf" class="btn btn-outline">Download Resume</a>
+  </div>
+  <div class="home-img">
+    <img src="images/vipst.jpeg" alt="Vipul Thakor" class="profile-pic">
+  </div>
+</section>
+
+<section id="about">
+  <h2 class="heading">About <span>Me</span></h2>
+  <div class="about-box card reveal">
+    <div class="about-text">
+      <h3>Web Developer &amp; IT Support Engineer</h3>
+      <p>I am a BCA student who loves building websites and applications. I have worked in IT desktop support and completed a school management system project as a web developer.</p>
+      <p>My goal is to become a professional developer and create useful software for people.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat"><h4>5</h4><p>Technologies</p></div>
+      <div class="stat"><h4>3</h4><p>Projects</p></div>
+      <div class="stat"><h4>8+</h4><p>Months IT Support</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="heading">My <span>Skills</span></h2>
+  <div class="skills-box card reveal">
+    <div class="skill"><div class="skill-info"><span>HTML</span><span>90%</span></div><div class="bar"><div class="bar-fill" data-width="90%"></div></div></div>
+    <div class="skill"><div class="skill-info"><span>CSS</span><span>80%</span></div><div class="bar"><div class="bar-fill" data-width="80%"></div></div></div>
+    <div class="skill"><div class="skill-info"><span>JavaScript</span><span>65%</span></div><div class="bar"><div class="bar-fill" data-width="65%"></div></div></div>
+    <div class="skill"><div class="skill-info"><span>Python</span><span>60%</span></div><div class="bar"><div class="bar-fill" data-width="60%"></div></div></div>
+    <div class="skill"><div class="skill-info"><span>C</span><span>60%</span></div><div class="bar"><div class="bar-fill" data-width="60%"></div></div></div>
+  </div>
+</section>
+
+<section id="experience">
+  <h2 class="heading">My <span>Experience</span></h2>
+  <div class="timeline reveal">
+    <div class="job card">
+      <h3>Web Developer</h3>
+      <h4>26 Jan 2026 - 25 Feb 2026</h4>
+      <p>Completed the School Management System project using Vue.js, PHP and SQL.</p>
+      <button class="btn cert-btn" data-file="files/certificate.pdf">View Certificate</button>
+    </div>
+    <div class="job card">
+      <h3>L1 Support Engineer (Desktop Support)</h3>
+      <h4>JSW Steel, Anjar - KAIZEN IT Service Pvt Ltd | 6 Months</h4>
+      <p>Handled desktop support, hardware and software issues and daily IT tickets for users.</p>
+      <button class="btn cert-btn" data-file="files/certificate-jsw.pdf">View Certificate</button>
+    </div>
+    <div class="job card">
+      <h3>Desktop Support</h3>
+      <h4>Adani (Backup Team) | 2 Months</h4>
+      <p>Provided desktop support and backup related work for users.</p>
+      <button class="btn cert-btn" data-file="files/certificate-adani.pdf">View Certificate</button>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="heading">My <span>Projects</span></h2>
+  <div class="projects-box reveal">
+    <div class="project-card card">
+      <div class="project-icon">🏫</div>
+      <h3>School Management System</h3>
+      <p>Built for Idex Solution Pvt Ltd, Gandhidham, to manage school data easily.</p>
+      <div class="tags"><span>Vue.js</span><span>CSS</span><span>JavaScript</span><span>PHP</span><span>SQL</span></div>
+    </div>
+    <div class="project-card card">
+      <div class="project-icon">🦯</div>
+      <h3>Smart Blind Stick</h3>
+      <p>College project in C++. An ultrasonic sensor detects obstacles and a buzzer alerts the user. Made with a 4 foot PVC pipe and a battery.</p>
+      <div class="tags"><span>C++</span><span>Ultrasonic Sensor</span><span>Buzzer</span><span>Battery</span></div>
+    </div>
+    <div class="project-card card">
+      <div class="project-icon">📝</div>
+      <h3>NoteNinja</h3>
+      <p>Converts XML to notes, stores them in Google Sheets and lets you access them anytime.</p>
+      <div class="tags"><span>XML</span><span>Google Sheets</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="resume">
+  <h2 class="heading">My <span>Resume</span></h2>
+  <div class="resume-box card reveal">
+    <iframe src="files/resume.pdf" title="Resume"></iframe>
+  </div>
+  <div class="resume-actions">
+    <a href="files/resume.pdf" download="Vipul_Resume.pdf" class="btn">Download Resume</a>
+    <a href="files/resume.pdf" target="_blank" class="btn btn-outline">Open Full Screen</a>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="heading">Contact <span>Me</span></h2>
+  <form class="contact-form card reveal" id="contactForm">
+    <div class="input-row">
+      <input type="text" name="name" id="name" placeholder="Your Name" required>
+      <input type="email" name="email" id="email" placeholder="Your Email" required>
+    </div>
+    <textarea name="message" id="message" rows="6" placeholder="Your Message" required></textarea>
+    <button type="submit" class="btn">Send Message</button>
+    <p class="form-msg" id="formMsg"></p>
+  </form>
+  <p class="mail-line">Or email me directly: <a href="mailto:thakor.vipul@gmail.com">thakor.vipul@gmail.com</a></p>
+</section>
+
+<footer class="footer">
+  <p>&copy; <span id="year"></span> Thakor Vipulji. All rights reserved.</p>
+  <a href="#home" class="top-btn">&uarr;</a>
+</footer>
+
+<div class="modal" id="certModal">
+  <span class="modal-close" id="modalClose">&times;</span>
+  <iframe id="modalFrame" title="Certificate"></iframe>
+  <a class="modal-open" id="modalOpen" href="#" target="_blank">Open in new tab</a>
+</div>
+
+<script>
+/* header + progress + active link */
+const header = document.getElementById("header");
+const progressBar = document.getElementById("progressBar");
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".navbar a");
+
+function updateScroll() {
+  const top = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  header.classList.toggle("scrolled", top > 50);
+  progressBar.style.width = (top / total) * 100 + "%";
+  let currentId = "home";
+  sections.forEach(function (s) {
+    if (top >= s.offsetTop - 200) currentId = s.id;
+  });
+  navLinks.forEach(function (l) {
+    l.classList.toggle("current", l.getAttribute("href") === "#" + currentId);
+  });
+}
+window.addEventListener("scroll", updateScroll);
+updateScroll();
+
+/* typing */
+const words = ["Web Developer", "IT Support Engineer", "Python Learner"];
+const typingEl = document.querySelector(".typing");
+let w = 0, c = 0, del = false;
+function type() {
+  const cur = words[w];
+  c += del ? -1 : 1;
+  typingEl.textContent = cur.substring(0, c);
+  let speed = del ? 50 : 100;
+  if (!del && c === cur.length) { speed = 1500; del = true; }
+  else if (del && c === 0) { del = false; w = (w + 1) % words.length; speed = 400; }
+  setTimeout(type, speed);
+}
+type();
+
+/* reveal + skill bars */
+const revealObs = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add("active"); });
+}, { threshold: 0.15 });
+document.querySelectorAll(".reveal").forEach(function (el) { revealObs.observe(el); });
+
+const barObs = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) {
+    if (e.isIntersecting) e.target.style.width = e.target.dataset.width;
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll(".bar-fill").forEach(function (b) { barObs.observe(b); });
+
+/* 3D tilt on project cards */
+document.querySelectorAll(".project-card").forEach(function (card) {
+  card.addEventListener("mousemove", function (e) {
+    const r = card.getBoundingClientRect();
+    const rx = ((e.clientY - r.top - r.height / 2) / r.height) * -12;
+    const ry = ((e.clientX - r.left - r.width / 2) / r.width) * 12;
+    card.style.transform = "perspective(800px) rotateX(" + rx + "deg) rotateY(" + ry + "deg) scale(1.03)";
+  });
+  card.addEventListener("mouseleave", function () {
+    card.style.transform = "perspective(800px) rotateX(0) rotateY(0) scale(1)";
+  });
+});
+
+/* hamburger */
+const menuBtn = document.getElementById("menuBtn");
+const navbar = document.getElementById("navbar");
+menuBtn.addEventListener("click", function () {
+  menuBtn.classList.toggle("open");
+  navbar.classList.toggle("open");
+});
+navLinks.forEach(function (l) {
+  l.addEventListener("click", function () {
+    menuBtn.classList.remove("open");
+    navbar.classList.remove("open");
+  });
+});
+
+/* certificate popup */
+const certModal = document.getElementById("certModal");
+const modalFrame = document.getElementById("modalFrame");
+const modalOpen = document.getElementById("modalOpen");
+document.querySelectorAll(".cert-btn").forEach(function (b) {
+  b.addEventListener("click", function () {
+    modalFrame.src = b.dataset.file;
+    modalOpen.href = b.dataset.file;
+    certModal.classList.add("show");
+  });
+});
+function closeModal() { certModal.classList.remove("show"); modalFrame.src = ""; }
+document.getElementById("modalClose").addEventListener("click", closeModal);
+certModal.addEventListener("click", function (e) { if (e.target === certModal) closeModal(); });
+document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
+
+/* contact form -> email (FormSubmit) */
+const form = document.getElementById("contactForm");
+const formMsg = document.getElementById("formMsg");
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  formMsg.textContent = "Sending...";
+  fetch("https://formsubmit.co/ajax/thakor.vipul@gmail.com", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      message: document.getElementById("message").value,
+      _subject: "New message from your portfolio"
+    })
+  })
+  .then(function (r) { return r.json(); })
+  .then(function () {
+    formMsg.textContent = "Thank you! Your message has been sent.";
+    form.reset();
+  })
+  .catch(function () {
+    formMsg.textContent = "Could not send. Please email thakor.vipul@gmail.com directly.";
+  });
+  setTimeout(function () { formMsg.textContent = ""; }, 6000);
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
